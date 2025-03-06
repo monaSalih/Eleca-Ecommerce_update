@@ -46,7 +46,7 @@ if (isset($_GET['message'])) {
                   <td> {$product['category_name']}</td>
                   <td>
                     <div class='text-center'>
-                        <img src='" . (!empty($product['image']) ? '../images/' . $product['image'] : 'images/default.png') . "' width='100' height='60'>
+                        <img src='" . (!empty($product['image']) ? '../../images/' . $product['image'] : 'images/default.png') . "' width='100' height='60'>
                     </div>
                   </td>
                   <td class='text-center'>

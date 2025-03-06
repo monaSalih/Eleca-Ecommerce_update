@@ -147,6 +147,7 @@ if (isset($_POST['update_quantity'])) {
 
          
          $select_orders->execute([$user_id]);
+         
          if($select_orders->rowCount() > 0){
             echo '<table class="order-items-table">';
             echo '<thead>';
@@ -160,7 +161,7 @@ if (isset($_POST['update_quantity'])) {
             echo '</tr>';
             echo '</thead>';
             echo '<tbody>';
-
+            var_dump($select_orders);
             $grand_total_price = 0;
 
             while($order = $select_orders->fetch(PDO::FETCH_ASSOC)){

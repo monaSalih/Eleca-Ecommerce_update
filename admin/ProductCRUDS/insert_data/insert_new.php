@@ -20,7 +20,7 @@ if (isset($_POST['add_product'])) {
 
         if (in_array($img_ext, $allowed_exts)) {
             $new_img_name = 'product' . time() . ".$img_ext";
-            if (move_uploaded_file($img_tmp, "../../images/$new_img_name")) {
+            if (move_uploaded_file($img_tmp, "../../../images/$new_img_name")) {
                 $product_image = $new_img_name; // Set the image path
             } else {
                 $message[] = 'Sorry, there was an error uploading your file.';

@@ -39,7 +39,7 @@
          <a href="search_page.php"><i class="fas fa-search"></i></a>
          <a href="wishlist.php"><i class="fas fa-heart"></i><span>(<?= $total_wishlist_counts; ?>)</span></a>
          <a href="orders.php"><i class="fas fa-shopping-cart"></i><span>(<?= $total_order_counts; ?>)</span></a>
-         <a href="update_user.php"><i class="fas fa-user"></i></a>
+         <div id="#user-btn"><i class="fas fa-user"></i></div>
       </div>
 
       <div class="profile">
