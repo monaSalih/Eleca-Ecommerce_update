@@ -1,93 +1,197 @@
 <?php
-include('./assets/header.php');
-include('./db_connection/conn.php');
-if(isset($_GET['message'])){
-  echo "<div style='background-color:green'> {$_GET['message']}</div>";
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    // echo $user_id;   
+} else {
+    header('location:user_login.php');
+    exit();
 }
+
 ?>
 
-<main>
-    
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>admin dashboard</title>
+</head>
+
+<body>
+    <div class="d-flex">
+        <div id="sidebar">
+            <button class="btn text-white sidebarHeaderbutton">Eleca Shop</button>
+            <a href="../ProductCRUDS\index.php">
+                <button class="btn CustomSidebarButtons text-white"><img src="../flaticon\product.png" alt=""
+                        class="me-1">
+                    Products</button>
+            </a>
+            <a href="#"> <button class="btn CustomSidebarButtons text-white"><img
+                        src="../flaticon/categories.png" alt="" class="me-1"> Categories</button></a>
+            <a href="../ProductCRUDS/index.php"><button class="btn CustomSidebarButtons text-white"><img src="../flaticon\man.png" alt=""
+                        class="me-1"> Users</button></a>
+            <a href=""><button class="btn CustomSidebarButtons text-white"><img src="../flaticon\coupon.png" alt=""
+                        class="me-1"> Coupons</button></a>
+            <a href="../OrderRU/index.php"><button class="btn CustomSidebarButtons text-white"><img src="../flaticon\received.png" alt=""
+                        class="me-1"> Orders</button></a>
+            <a href=""><button class="btn CustomSidebarButtons text-white"><img src="../flaticon\cogwheel.png" alt=""
+                        class="me-1"> Settings</button></a>
+
+        </div>
+        <div class="page-content">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid d-flex justify-content-between">
+                    <div class="d-flex">
+                        <button class="btn"><i class="fa-solid fa-bars"></i></button>
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
 
 
-    <h1>category Information</h1>
-    <!-- FIX: Updated data attributes for Bootstrap 5 -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Add category
-    </button>
+                    <div class="me-5 pe-4">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-    <div class="container mt-5">
-        <table class="table table-striped table-hover table-bordered ">
-            <thead>
-                <tr>
-                    <!-- <th scope="col">id</th> -->
-                    <th scope="col">id</th>
-                    <th scope="col">name</th>
-                    <th scope="col">image</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-              <?php
-                $query= "SELECT * FROM `category`";
-                $categories=$conn->query($query);
-                // print_r ($users);
-                foreach($categories as $category){
-                  echo "<tr>
-                   <td>{$category['id']}</td>
-                  <td>{$category['name']}</td>
+                            <li class="mx-3 pt-2"> <a href="#"><img src="../flaticon/notification.png"
+                                        alt="asdfsadf"></a></li>
+
+                            <li class="mx-3 pt-2"><a href="#"><a href="#"><img src="../flaticon/envelope.png"
+                                            alt="asdfsadf"></a></li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown">
+                                    <img src="../flaticon/profile.png" alt="asdfsadf">
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i> Profile</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i>
+                                            Log out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+            <?php
+
+            include('db_connection/conn.php');
+
+            if (isset($_GET['message'])) {
+                echo "<div style='background-color:green'> {$_GET['message']}</div>";
+            }
+            ?>
+
+            <main>
+
+
+
+
+
+                <div class="container mt-5">
+                    <div class="mb-5">
+                        <h1>Category Information</h1>
+                        <!-- FIX: Updated data attributes for Bootstrap 5 -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Add Category
+                        </button>
+                    </div>
+
+                    <table class="table table-striped table-hover table-bordered ">
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col">id</th> -->
+                                <th scope="col" class="text-center">id</th>
+                                <th scope="col" class="text-center">name</th>
+                                <th scope="col" class="text-center">image</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = "SELECT * FROM `category`";
+                            $categories = $conn->query($query);
+                            // print_r ($users);
+                            foreach ($categories as $category) {
+                                echo "<tr>
+                   <td class='text-center'>{$category['id']}</td>
+                  <td class='text-center'>{$category['name']}</td>
                   <td>
                     <div class='text-center'>
                         <img src='" . (!empty($category['image']) ? 'images/' . $category['image'] : 'images/default.png') . "' width='100' height='60'>
                     </div>
                   </td>
                   <td class='text-center'>
-                  <a href='./update_data/update_page.php?id={$category['id']}' class='btn btn-success'>Edit</a>
-                  <a href='./delete_data/delete_page.php?id={$category['id']}' class='btn btn-danger'>Delete</a>
+                  <a href='./update_data/update_page.php?id={$category['id']}' class='btn btn-sm btn-success'><i class='fa-solid fa-pen-to-square'></i> Edit</a>
+                  |
+                  <a href='./delete_data/delete_page.php?id={$category['id']}' class='btn btn-sm btn-danger'><i class='fa-solid fa-trash'></i> Delete</a>
                   </td>
 
                   </tr>";
-                }
-              ?>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New category</h5>
-                    <!-- FIX: Bootstrap 5 requires 'btn-close' instead of 'close' -->
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-                <div class="modal-body">
-                    <form action="insert_data/insert_new.php" method="post" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label for="user-name" class="col-form-label"> Name:</label>
-                            <input type="text" class="form-control" id="category_name" name="category_name">
-                        </div>
-                        <div class="mb-3">
-                            <input type="file" class="form-control" name="category_image">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-success" name="add_category" value="Add">
-                        </div>
-                    </form>
-
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
 
-            </div>
-        </div>
-    </div>
-</main>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New category</h5>
+                                <!-- FIX: Bootstrap 5 requires 'btn-close' instead of 'close' -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form action="insert_data/insert_new.php" method="post" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="user-name" class="col-form-label"> Name:</label>
+                                        <input type="text" class="form-control" id="category_name" name="category_name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="file" class="form-control" name="category_image">
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-success" name="add_category" value="Add">
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
 
 
-<?php
-include('./assets/footer.php');
+            <?php
+            include('./assets/footer.php');
 
-?>
+            ?>

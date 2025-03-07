@@ -70,7 +70,7 @@ if(isset($_SESSION['user_id'])){
             <img src="images/home-img-3.png" alt="">
          </div>
          <div class="content">
-            <span>upto 50% off</span>
+            <span>up to 50% off</span>
             <h3>latest headsets</h3>
             <a href="shop.php" class="btn">shop now</a>
          </div>

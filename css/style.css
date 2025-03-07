@@ -152,11 +152,11 @@ section{
       transform: translateY(1rem);
    }
 }
-
+/* 
 .header{
    position: sticky;
    top:0; left:0; right:0;
-   background-color: (--orange);
+   background-color:red;
    box-shadow: var(--box-shadow);
    z-index: 1000;
 }
@@ -227,7 +227,7 @@ section{
    color:var(--black);
    font-size: 2rem;
    margin-bottom: 1rem;
-}
+} */
 
 #menu-btn{
    display: none;
